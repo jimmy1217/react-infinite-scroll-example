@@ -4,7 +4,6 @@ const webpack = require('webpack')
 const CompressionPlugin = require('compression-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 require('dotenv').config()
@@ -44,12 +43,7 @@ const config = (env, argv) => {
             hash: true,
             cache: false,
             title: process.env.TITLE,
-            favicons:process.env.SITE_NAME
         }),
-        /** 使用複製資料 plugin */
-        new CopyWebpackPlugin([
-            { from: './public/favicons/', to: './favicons/', ignore: ['.*'] },
-        ]),
         new Dotenv({
             path: path.join(__dirname, dotEnvFile),
             systemvars: true
@@ -194,15 +188,16 @@ const config = (env, argv) => {
             modules: [path.resolve(__dirname, 'src'), 'node_modules'],
             // import alias
             alias: {
-                '@api': path.resolve(__dirname, './src/actions/api.js'),
-                '@components': path.resolve(__dirname, './src/components/'),
-                '@containers': path.resolve(__dirname, './src/containers/'),
-                '@actions': path.resolve(__dirname, './src/actions/'),
-                '@store': path.resolve(__dirname, './src/store/'),
-                '@storeAction': path.resolve(__dirname, './src/store/storeAction'),
-                '@helpers': path.resolve(__dirname, './src/helpers'),
-                '@constants': path.resolve(__dirname, './src/constants'),
-                '@public': path.resolve(__dirname, './public'),
+                'api': path.resolve(__dirname, './src/actions/api.js'),
+                'components': path.resolve(__dirname, './src/components/'),
+                'containers': path.resolve(__dirname, './src/containers/'),
+                'actions': path.resolve(__dirname, './src/actions/'),
+                'store': path.resolve(__dirname, './src/store/'),
+                'storeAction': path.resolve(__dirname, './src/store/storeAction'),
+                'helpers': path.resolve(__dirname, './src/helpers'),
+                'constants': path.resolve(__dirname, './src/constants'),
+                'public': path.resolve(__dirname, './public'),
+                'react-dom': '@hot-loader/react-dom'
             },
             // import 時可不寫附檔名
             extensions: ['.js', '.css', '.scss', '.json'],

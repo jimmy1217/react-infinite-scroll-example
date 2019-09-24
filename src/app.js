@@ -1,19 +1,30 @@
 import { hot } from 'react-hot-loader'
-import React from 'react';
-/** mobx data flow */
-import * as stores from './store'
+import React, { Component } from 'react';
+import RootPage from 'containers/RootPage';
 import { Provider, onError } from 'mobx-react';
-import RootPage from '@containers';
+import * as stores from './store'
 
-const App = () => (
-    <Provider {...stores}>
-        <RootPage />
-    </Provider>
-)
+class App extends Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        return (
+            <Provider {...stores}>
+                <RootPage />
+            </Provider>
+        );
+    }
+}
 
-onError(error => {
-    console.log('----mobx-error-msg----')
-    console.log(error)
-})
+/** mobx data flow */
+
+
+
+
+// onError(error => {
+//     console.log('----mobx-error-msg----')
+//     console.log(error)
+// })
 
 export default hot(module)(App)
