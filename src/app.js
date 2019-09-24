@@ -12,8 +12,8 @@ const GlobalStyle = createGlobalStyle`
   .m-0 {
     margin: 0;
   }
-  .mt-5 {
-    margin-top:5px;
+  .mr-5 {
+    margin-right:5px;
   }
 `;
 

@@ -24,7 +24,6 @@ class List extends Component {
             document.body.scrollTop || 0;
 
         const scrollAtBottom = viewportHeight + scrollHeight === pageHeight
-        console.log(`scrollHeight`, scrollHeight)
         if (scrollAtBottom) {
             this.props.getNextPage();
         }
@@ -37,8 +36,9 @@ class List extends Component {
                 {resultList.map(item => {
                     return (
                         <div key={item.node_id} className="listItem">
-                            {item.owner.login} <a href={item.html_url} target="_blink">{item.name}</a>
-                            {item.stargazers_count}
+                            <div className="mr-5">{item.owner.login}</div>
+                            <a href={item.html_url} target="_blink">{item.name}</a>
+                            <div className="lang">{item.language}</div>
                         </div>)
                 })}
             </ListStyle>

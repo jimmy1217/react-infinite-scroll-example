@@ -17,7 +17,8 @@ class PageRoot extends Component {
                     store={this.props.RootPageStore}
                     valueKey="keyword"
                     onChange={searchBarOnChange}
-                    onSubmit={onSubmit} />
+                    onSubmit={onSubmit} 
+                    placeholder="輸入完畢後按下 Enter" />
                 <List
                     store={this.props.RootPageStore}
                     getNextPage={getNextPage} />
