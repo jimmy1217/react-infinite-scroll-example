@@ -30,6 +30,9 @@ class RootPageStore extends storeAction {
             const newList = [...this.list, ...res.items];
             this.assignData({ list: newList, total_count: res.total_count })
         } catch (error) {
+            this.paramsAssign({
+                page: this.params.page - 1 < 1 ? 1 : this.params.page - 1
+            })
             console.log(error)
         }
     }
@@ -67,7 +70,6 @@ class RootPageStore extends storeAction {
         if (this.resultTotal === this.total_count) {
             this.assignData({ noResult: true })
         }
-        console.log(this.resultTotal)
     }
     /** 目前筆數 */
     @computed get resultTotal() {
