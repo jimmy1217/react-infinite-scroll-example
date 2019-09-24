@@ -55,7 +55,6 @@ class RootPageStore extends storeAction {
                 page: 1
             },
         })
-        this.preKeyword = this.params.keyword;
     }
     /** 內容送出 */
     @action onSubmit = (e) => {
@@ -63,7 +62,7 @@ class RootPageStore extends storeAction {
             e.preventDefault();
             e.stopPropagation();
         }
-        if (this.params.keyword.length) {
+        if ((this.preKeyword !== this.params.keyword) && this.params.keyword.length) {
             this.preKeyword = this.params.keyword
             this.getList(this.postData)
         }
