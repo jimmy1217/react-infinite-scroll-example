@@ -36,8 +36,9 @@ class List extends Component {
             <ListStyle>
                 {resultList.map(item => {
                     return (
-                        <div key={item.id} className="listItem">
-                            {item.full_name}
+                        <div key={item.node_id} className="listItem">
+                            {item.owner.login} <a href={item.html_url} target="_blink">{item.name}</a>
+                            {item.stargazers_count}
                         </div>)
                 })}
             </ListStyle>

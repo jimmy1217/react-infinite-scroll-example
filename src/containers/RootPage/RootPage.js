@@ -8,18 +8,15 @@ class PageRoot extends Component {
     constructor(props) {
         super(props);
     }
-    searchBarOnChange = (e) => {
-        const { paramsAssign } = this.props.RootPageStore;
-        paramsAssign({ keyword: e.target.value });
-    }
+
     render() {
-        const { onSubmit, getNextPage } = this.props.RootPageStore;
+        const { onSubmit, getNextPage, searchBarOnChange } = this.props.RootPageStore;
         return (
             <div>
                 <SearchBar
                     store={this.props.RootPageStore}
                     valueKey="keyword"
-                    onChange={this.searchBarOnChange}
+                    onChange={searchBarOnChange}
                     onSubmit={onSubmit} />
                 <List
                     store={this.props.RootPageStore}

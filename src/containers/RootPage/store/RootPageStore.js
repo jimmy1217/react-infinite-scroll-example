@@ -20,19 +20,30 @@ class RootPageStore extends storeAction {
     constructor() {
         super()
         this.initState = initState
+        this.preKeyword = '';
         extendObservable(this, initState)
     }
     /** 查詢列表 */
     @action getList = async (postData) => {
         try {
             const res = await getRepositories(postData);
-            
             const newList = [...this.list, ...res.items];
             this.assignData({ list: newList, total_count: res.total_count })
         } catch (error) {
-            console.log(error)   
+            console.log(error)
         }
-       
+    }
+    @action searchBarOnChange = (e) => {
+        this.assignData({
+            noResult: false,
+            list: [],
+            params: {
+                ...this.params,
+                keyword: e.target.value,
+                page: 1
+            },
+        })
+        this.preKeyword = this.params.keyword;
     }
     /** 內容送出 */
     @action onSubmit = (e) => {
@@ -40,10 +51,8 @@ class RootPageStore extends storeAction {
             e.preventDefault();
             e.stopPropagation();
         }
-        if (this.params.keyword) {
-            this.paramsAssign({
-                page: 1
-            })
+        if (this.params.keyword.length) {
+            this.preKeyword = this.params.keyword
             this.getList(this.postData)
         }
     }

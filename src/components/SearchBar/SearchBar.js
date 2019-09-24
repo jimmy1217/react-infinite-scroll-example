@@ -9,7 +9,6 @@ const SearchBar = ({ valueKey, store, onSubmit, ...etc }) => {
                 <input type="text" {...etc} value={store.params[valueKey]} />
                 <input type="hidden" value="" />
             </form>
-
         </SearchBarStyle>
     )
 }
