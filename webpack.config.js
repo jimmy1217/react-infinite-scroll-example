@@ -6,10 +6,6 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
-require('dotenv').config()
-const Dotenv = require('dotenv-webpack')
-const dotEnvFile = process.env.BRANCH_NAME === "local" ? "env/.env.devServer.local" : ".env"
-
 const config = (env, argv) => {
     /** 用來判斷環境是本機開發或production */
     const isDev = argv.mode === 'development'
@@ -23,8 +19,6 @@ const config = (env, argv) => {
                 __VERSION__: JSON.stringify(require('./package.json').version),
             },
         }),
-        /** 移除moment 多餘語系 */
-        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
         /** 每次打包時把產生出來的dist 清空 */
         new CleanWebpackPlugin(['dist']),
         /** 打包時顯示進度條 */
@@ -43,10 +37,6 @@ const config = (env, argv) => {
             hash: true,
             cache: false,
             title: process.env.TITLE,
-        }),
-        new Dotenv({
-            path: path.join(__dirname, dotEnvFile),
-            systemvars: true
         }),
     ]
 
@@ -112,7 +102,7 @@ const config = (env, argv) => {
         },
         /** 設定進入點 */
         entry: {
-            app: [path.resolve(__dirname, './src/root.js')],
+            app: ['babel-polyfill',path.resolve(__dirname, './src/root.js')],
         },
         /** 設定打包出來後的目錄 */
         output: {
