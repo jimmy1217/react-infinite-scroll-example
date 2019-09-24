@@ -26,12 +26,21 @@ class RootPageStore extends storeAction {
     /** 查詢列表 */
     @action getList = async (postData) => {
         try {
+            this.assignData({ isFetching: true })
             const res = await getRepositories(postData);
             const newList = [...this.list, ...res.items];
-            this.assignData({ list: newList, total_count: res.total_count })
+            this.assignData({
+                list: newList,
+                total_count: res.total_count,
+                isFetching: false
+            })
         } catch (error) {
-            this.paramsAssign({
-                page: this.params.page - 1 < 1 ? 1 : this.params.page - 1
+            this.assignData({
+                isFetching: false,
+                params: {
+                    ...this.params,
+                    page: this.params.page - 1 < 1 ? 1 : this.params.page - 1
+                }
             })
             console.log(error)
         }
@@ -61,7 +70,7 @@ class RootPageStore extends storeAction {
     }
     /** 取得下一頁內容 */
     @action getNextPage = async () => {
-        if (!this.noResult) {
+        if (!this.noResult && !this.isFetching) {
             this.paramsAssign({
                 page: this.params.page + 1
             })
