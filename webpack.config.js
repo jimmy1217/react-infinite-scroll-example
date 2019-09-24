@@ -40,6 +40,16 @@ const config = (env, argv) => {
         }),
     ]
 
+    const alias = {
+        'api': path.resolve(__dirname, './src/actions/api.js'),
+        'components': path.resolve(__dirname, './src/components/'),
+        'containers': path.resolve(__dirname, './src/containers/'),
+        'actions': path.resolve(__dirname, './src/actions/'),
+        'store': path.resolve(__dirname, './src/store/'),
+        'storeAction': path.resolve(__dirname, './src/store/storeAction'),
+        'public': path.resolve(__dirname, './public'),
+    };
+
     const devServer = isDev
         ? {
               proxy: {
@@ -65,6 +75,8 @@ const config = (env, argv) => {
             new webpack.HotModuleReplacementPlugin()
         )
     } else {
+        alias['react'] = "preact/compat";
+        alias['react-dom'] = "preact/compat";
         /** 等 nginx 有支援 static gzip 時再解開, 做gzip壓縮 */
         plugins.push(
             new CompressionPlugin({
@@ -177,18 +189,7 @@ const config = (env, argv) => {
         resolve: {
             modules: [path.resolve(__dirname, 'src'), 'node_modules'],
             // import alias
-            alias: {
-                'api': path.resolve(__dirname, './src/actions/api.js'),
-                'components': path.resolve(__dirname, './src/components/'),
-                'containers': path.resolve(__dirname, './src/containers/'),
-                'actions': path.resolve(__dirname, './src/actions/'),
-                'store': path.resolve(__dirname, './src/store/'),
-                'storeAction': path.resolve(__dirname, './src/store/storeAction'),
-                'helpers': path.resolve(__dirname, './src/helpers'),
-                'constants': path.resolve(__dirname, './src/constants'),
-                'public': path.resolve(__dirname, './public'),
-                'react-dom': '@hot-loader/react-dom'
-            },
+            alias: alias,
             // import 時可不寫附檔名
             extensions: ['.js', '.css', '.scss', '.json'],
         },
