@@ -52,12 +52,12 @@ const config = (env, argv) => {
 
     const devServer = isDev
         ? {
-              contentBase: path.join(__dirname, 'dist'),
-              compress: true,
-              port: 3000,
-              inline: true,
-              hot: true,
-          }
+            contentBase: path.join(__dirname, 'dist'),
+            compress: true,
+            port: 3000,
+            inline: true,
+            hot: true,
+        }
         : undefined
 
     if (isDev) {
@@ -105,7 +105,7 @@ const config = (env, argv) => {
         },
         /** 設定進入點 */
         entry: {
-            app: ['babel-polyfill',path.resolve(__dirname, './src/root.js')],
+            app: ['babel-polyfill', path.resolve(__dirname, './src/root.js')],
         },
         /** 設定打包出來後的目錄 */
         output: {
@@ -113,7 +113,7 @@ const config = (env, argv) => {
             filename: '[name].[hash:4].js',
         },
         /** source map 映射方式 */
-        devtool: isDev ? 'source-map' : 'source-map',
+        devtool: isDev ? 'source-map' : 'cheap-module-source-map',
         /** 下面都在解析, 看到甚麼附檔名,用甚麼方式處裡 */
         module: {
             rules: [
