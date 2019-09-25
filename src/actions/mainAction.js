@@ -28,10 +28,7 @@ export function get(url, data, abort = false) {
             })
             : undefined,
     })
-        .then(response => {
-            console.log(response)
-            return response.data
-        })
+        .then(response => response.data)
         .catch(err => {
             if (err.response.status === 403) {
                 return Promise.reject({ status: 403 })

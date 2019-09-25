@@ -37,7 +37,6 @@ class RootPageStore extends storeAction {
                     }
                 });
             if (res) {
-                console.log(res.items)
                 const newList = [...this.list, ...res.items];
                 this.assignData({
                     list: newList,

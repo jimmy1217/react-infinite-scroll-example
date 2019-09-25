@@ -36,7 +36,7 @@ const config = (env, argv) => {
             },
             hash: true,
             cache: false,
-            title: process.env.TITLE,
+            title: 'react-infinite-scroll',
         }),
     ]
 
@@ -52,15 +52,6 @@ const config = (env, argv) => {
 
     const devServer = isDev
         ? {
-              proxy: {
-                  '/api/**': {
-                      target: process.env.CONFIG_DEVSERVER_URL,
-                      pathRewrite: { '^/api': '' },
-                      changeOrigin: true,
-                      secure: false,
-                      logLevel: 'debug',
-                  },
-              },
               contentBase: path.join(__dirname, 'dist'),
               compress: true,
               port: 3000,
