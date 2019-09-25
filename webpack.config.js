@@ -5,6 +5,7 @@ const CompressionPlugin = require('compression-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const OfflinePlugin = require('offline-plugin')
 
 const config = (env, argv) => {
     /** 用來判斷環境是本機開發或production */
@@ -38,6 +39,7 @@ const config = (env, argv) => {
             cache: false,
             title: 'react-infinite-scroll',
         }),
+        new OfflinePlugin()
     ]
 
     const alias = {
