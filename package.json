@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --hotOnly --port 3000 --mode development --open",
-    "start": "http-server dist -g -o",
-    "build": "webpack -p"
+    "start": "npx http-server dist -g -o",
+    "build": "webpack -p",
+    "gh": "git subtree push --prefix public origin gh-pages"
   },
   "repository": {
     "type": "git",
