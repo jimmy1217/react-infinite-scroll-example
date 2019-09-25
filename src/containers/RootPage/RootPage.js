@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { SearchBar, List } from 'components';
+import { SearchBar, List, PlaceholderBar } from 'components';
 
 @inject('RootPageStore')
 @observer
@@ -17,7 +17,7 @@ class PageRoot extends Component {
                     store={this.props.RootPageStore}
                     valueKey="keyword"
                     onChange={searchBarOnChange}
-                    onSubmit={onSubmit} 
+                    onSubmit={onSubmit}
                     placeholder="輸入完畢後按下 Enter" />
                 <List
                     store={this.props.RootPageStore}

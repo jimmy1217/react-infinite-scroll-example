@@ -13,7 +13,6 @@ export const ListStyle = styled.div`
         backface-visibility: hidden;    
         will-change: transform, opacity, padding;
         @media (max-width: 769px) {
-            display:block;
             padding:10px 0 0 0;
             line-height:20px;
         }
@@ -33,15 +32,10 @@ export const ListStyle = styled.div`
     }
 
     .lang {
-        margin-left:20px;
         transition: all .3s ease;
         color:#ff9e9e;
-        font-weight:900;
         flex:1;
-        transform:translate(20px,0);
+        transform:translate(0,20px);
         opacity:0;
-        @media (max-width: 769px) {
-            margin-left:0;
-        }
     }
 `

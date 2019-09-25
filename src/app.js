@@ -18,6 +18,9 @@ const GlobalStyle = createGlobalStyle`
   .mr-5 {
     margin-right:5px;
   }
+  .mb-5 {
+    margin-bottom:5px;
+  }
 `;
 
 class App extends Component {
