@@ -6,7 +6,7 @@ const SearchBar = ({ valueKey, store, onSubmit, ...etc }) => {
     return (
         <SearchBarStyle>
             <form onSubmit={onSubmit}>
-                <input type="text" {...etc} value={store.params[valueKey]} />
+                <input type="text" {...etc} value={store[valueKey]} />
                 <input type="hidden" value="" />
             </form>
         </SearchBarStyle>

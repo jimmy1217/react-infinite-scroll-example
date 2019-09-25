@@ -8,19 +8,21 @@ class PageRoot extends Component {
     constructor(props) {
         super(props);
     }
-
     render() {
-        const { onSubmit, getNextPage, searchBarOnChange } = this.props.RootPageStore;
+        const { onSubmit, searchBarOnChange, list, isFetching, isLock, getNextPage, lockTime } = this.props.RootPageStore;
         return (
             <div>
                 <SearchBar
                     store={this.props.RootPageStore}
-                    valueKey="keyword"
+                    valueKey="param_keyword"
                     onChange={searchBarOnChange}
                     onSubmit={onSubmit}
                     placeholder="輸入完畢後按下 Enter" />
                 <List
-                    store={this.props.RootPageStore}
+                    list={list}
+                    isFetching={isFetching}
+                    isLock={isLock}
+                    lockTime={lockTime}
                     getNextPage={getNextPage} />
             </div>
         );

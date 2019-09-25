@@ -28,12 +28,15 @@ export function get(url, data, abort = false) {
             })
             : undefined,
     })
-        .then(response => response.data)
-        .catch(e => {
-            catchError(e)
+        .then(response => {
+            console.log(response)
+            return response.data
+        })
+        .catch(err => {
+            if (err.response.status === 403) {
+                return Promise.reject({ status: 403 })
+            }
+            return catchError(err)
         })
 }
 
-export function catchError(e) {
-    console.log(e)
-}

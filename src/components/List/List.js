@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { ListStyle } from './style';
-import PlaceholderBar from './../PlaceholderBar';
-
+import PlaceholderBar from 'components/PlaceholderBar';
+import ListItem from 'components/ListItem';
 
 @observer
 class List extends Component {
@@ -32,24 +32,16 @@ class List extends Component {
     }
 
     render() {
-        const resultList = this.props.store.list;
-        const isFetching = this.props.store.isFetching;
+        const { list, isFetching, isLock, lockTime } = this.props;
         return (
             <ListStyle>
-                {resultList.map((item, i) => {
+                {list.map((item, i) => {
                     const unique_id = `${item.node_id}_${i}` /** node_id 跟 id都撞... */
-                    return (
-                        <div key={unique_id} className="listItem">
-                            <div>
-                                <div className="mr-5">{item.owner.login}</div>
-                                <a href={item.html_url} target="_blink">{item.name}</a>
-                                <div className="lang">{item.language}</div>
-                            </div>
-                        </div>)
-
+                    return (<ListItem key={unique_id} item={item} />)
                 })}
-                {isFetching &&
+                {(isFetching || isLock) &&
                     <div style={{ width: '100%', maxWidth: '600px' }}>
+                        {isLock && <p>太猴急了!! 請等個{lockTime}秒</p>}
                         <div style={{ padding: '10px 0' }}>
                             <PlaceholderBar height="20px" className="mb-5" blockArr={[1, 1, 1, 0, 0, 0, 0, 0, 0, 0]} />
                             <PlaceholderBar height="20px" className="mb-5" blockArr={[1, 0, 1, 1, 1, 1, 0, 0, 0, 0]} />
@@ -63,7 +55,7 @@ class List extends Component {
                         <div style={{ padding: '10px 0' }}>
                             <PlaceholderBar height="20px" className="mb-5" blockArr={[1, 1, 1, 0, 0, 0, 0, 0, 0, 0]} />
                             <PlaceholderBar height="20px" className="mb-5" blockArr={[1, 0, 1, 1, 1, 1, 0, 0, 0, 0]} />
-                            <PlaceholderBar height="20px" className="mb-5" blockArr={[1, 1, 0, 1, 1, 1, 0, 0, 0, 0]} />
+                            <PlaceholderBar height="20px" className="mb-5" blockArr={[1, 1, 0, 1, 1, 1, 1, 1, 0, 0]} />
                         </div>
                     </div>
                 }

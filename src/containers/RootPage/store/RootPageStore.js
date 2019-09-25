@@ -4,16 +4,15 @@ import { getRepositories } from 'api';
 
 const initState = {
     isFetching: false,
-    didInvalidate: true,
+    isLock: false,
+    lockTime: 40,
     list: [],
     total_count: 0,
     noResult: false,
-    params: {
-        keyword: '',
-        sort: '',
-        order: '',
-        page: 1,
-    }
+    param_keyword: '',
+    param_sort: '',
+    param_order: '',
+    param_page: 1,
 }
 
 class RootPageStore extends storeAction {
@@ -27,33 +26,51 @@ class RootPageStore extends storeAction {
     @action getList = async (postData) => {
         try {
             this.assignData({ isFetching: true })
-            const res = await getRepositories(postData);
-            const newList = [...this.list, ...res.items];
-            this.assignData({
-                list: newList,
-                total_count: res.total_count,
-                isFetching: false
-            })
+            const res = await getRepositories(postData)
+                .catch(err => {
+                    if (err && err.status === 403) {
+                        this.assignData({
+                            isFetching: false,
+                            isLock: true,
+                        })
+                        this.setLockTime(this.lockTime)
+                    }
+                });
+            if (res) {
+                console.log(res.items)
+                const newList = [...this.list, ...res.items];
+                this.assignData({
+                    list: newList,
+                    total_count: res.total_count,
+                    isFetching: false
+                })
+            }
         } catch (error) {
-            this.assignData({
-                isFetching: false,
-                params: {
-                    ...this.params,
-                    page: this.params.page - 1 < 1 ? 1 : this.params.page - 1
-                }
-            })
             console.log(error)
         }
     }
+    @action setLockTime = (time) => {
+        if (this.time) { clearTimeout(this.time) }
+        if (time) {
+            this.time = setTimeout(() => {
+                this.assignData({
+                    lockTime: time,
+                    isLock: true,
+                })
+                this.setLockTime(time - 1)
+            }, 1000);
+        } else {
+            this.assignData({
+                lockTime: 40,
+                isLock: false,
+            })
+            this.getList(this.postData)
+        }
+    }
+
     @action searchBarOnChange = (e) => {
         this.assignData({
-            noResult: false,
-            list: [],
-            params: {
-                ...this.params,
-                keyword: e.target.value,
-                page: 1
-            },
+            param_keyword: e.target.value,
         })
     }
     /** 內容送出 */
@@ -62,16 +79,21 @@ class RootPageStore extends storeAction {
             e.preventDefault();
             e.stopPropagation();
         }
-        if ((this.preKeyword !== this.params.keyword) && this.params.keyword.length) {
-            this.preKeyword = this.params.keyword
+        if ((this.preKeyword !== this.param_keyword) && this.param_keyword.length) {
+            this.assignData({
+                noResult: false,
+                list: [],
+                param_page: 1
+            })
+            this.preKeyword = this.param_keyword
             this.getList(this.postData)
         }
     }
     /** 取得下一頁內容 */
     @action getNextPage = async () => {
-        if (!this.noResult && !this.isFetching) {
-            this.paramsAssign({
-                page: this.params.page + 1
+        if (!this.noResult && !this.isFetching && !this.isLock) {
+            this.assignData({
+                param_page: this.param_page + 1
             })
             await this.getList(this.postData);
         }
@@ -85,12 +107,12 @@ class RootPageStore extends storeAction {
     }
     /** 送出的資料 */
     @computed get postData() {
-        const { keyword, sort, order, page } = this.params;
+        const { param_keyword, param_sort, param_order, param_page } = this;
         return {
-            q: keyword,
-            sort: sort || undefined,
-            order: order || undefined,
-            page
+            q: this.preKeyword,
+            sort: param_sort || undefined,
+            order: param_order || undefined,
+            param_page
         };
     }
     // @action reset ......
