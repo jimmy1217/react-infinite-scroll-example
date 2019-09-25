@@ -10,7 +10,7 @@ import { normalize } from "styled-normalize";
 const GlobalStyle = createGlobalStyle`
   ${normalize}
   html {
-    font-family: sans-serif;
+    font-family: Microsoft JhengHei,Helvetica Neue,Helvetica,Arial,sans-serif;
   }
   .m-0 {
     margin: 0;
