@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --hotOnly --port 3000 --mode development --open",
+    "dev": "webpack-dev-server --hotOnly --port 3000 --mode development --open",
+    "start": "http-server dist -g -o",
     "build": "webpack -p"
   },
   "repository": {

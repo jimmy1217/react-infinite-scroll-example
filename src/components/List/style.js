@@ -10,6 +10,7 @@ export const ListStyle = styled.div`
         align-items:center;
         transition: all .2s ease-in;
         transform:scale(1);
+        backface-visibility: hidden;    
         will-change: transform, opacity, padding;
         @media (max-width: 769px) {
             display:block;
@@ -17,7 +18,7 @@ export const ListStyle = styled.div`
             line-height:20px;
         }
         &:hover {
-            transform:scale(1.05);
+            transform:scale(1.044);
             box-shadow:0 1px 3px 0px #ddd;
             padding:0 0 0 10px;
             .lang{
@@ -37,7 +38,7 @@ export const ListStyle = styled.div`
         color:#ff9e9e;
         font-weight:900;
         flex:1;
-        transform:translate3d(20px,0,0);
+        transform:translate(20px,0);
         opacity:0;
         @media (max-width: 769px) {
             margin-left:0;

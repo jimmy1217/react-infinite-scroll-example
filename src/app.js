@@ -9,6 +9,9 @@ import { normalize } from "styled-normalize";
 /** global style */
 const GlobalStyle = createGlobalStyle`
   ${normalize}
+  html {
+    font-family: sans-serif;
+  }
   .m-0 {
     margin: 0;
   }
