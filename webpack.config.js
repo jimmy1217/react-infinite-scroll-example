@@ -41,9 +41,9 @@ const config = (env, argv) => {
             title: 'react-infinite-scroll',
         }),
         /** 使用複製資料 plugin */
-        new CopyWebpackPlugin([
-            { from: './public/favicons/', to: './favicons/', ignore: ['.*'] },
-        ]),
+        // new CopyWebpackPlugin([
+        //     { from: './public/favicons/', to: './favicons/', ignore: ['.*'] },
+        // ]),
     ]
 
     const alias = {
@@ -74,7 +74,7 @@ const config = (env, argv) => {
     } else {
         plugins.push(
             /** service worker */
-            new OfflinePlugin()
+            // new OfflinePlugin()
         )
         
         alias['react'] = "preact/compat";
@@ -121,7 +121,6 @@ const config = (env, argv) => {
         /** 設定打包出來後的目錄 */
         output: {
             path: path.resolve(__dirname, './dist/'),
-            publicPath: "/",
             filename: '[name].[hash:4].js',
         },
         /** source map 映射方式 */
