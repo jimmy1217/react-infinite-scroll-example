@@ -17,7 +17,7 @@ class PageRoot extends Component {
                     valueKey="param_keyword"
                     onChange={searchBarOnChange}
                     onSubmit={onSubmit}
-                    placeholder="輸入完畢後按下 Enter" />
+                    placeholder="輸入完畢後按下 Enter9" />
                 <List
                     list={list}
                     isFetching={isFetching}
