@@ -19,7 +19,6 @@ class RootPageStore extends storeAction {
     constructor() {
         super()
         this.initState = initState
-        this.preKeyword = '';
         extendObservable(this, initState)
     }
     /** 查詢列表 */
@@ -71,6 +70,7 @@ class RootPageStore extends storeAction {
         this.assignData({
             param_keyword: e.target.value,
         })
+        this.onSubmit();
     }
     /** 內容送出 */
     @action onSubmit = (e) => {
@@ -78,13 +78,12 @@ class RootPageStore extends storeAction {
             e.preventDefault();
             e.stopPropagation();
         }
-        if ((this.preKeyword !== this.param_keyword) && this.param_keyword.length) {
-            this.assignData({
-                noResult: false,
-                list: [],
-                param_page: 1
-            })
-            this.preKeyword = this.param_keyword
+        this.assignData({
+            noResult: false,
+            list: [],
+            param_page: 1
+        })
+        if (this.param_keyword.length) {
             this.getList(this.postData)
         }
     }
@@ -108,7 +107,7 @@ class RootPageStore extends storeAction {
     @computed get postData() {
         const { param_keyword, param_sort, param_order, param_page } = this;
         return {
-            q: this.preKeyword,
+            q: param_keyword,
             sort: param_sort || undefined,
             order: param_order || undefined,
             param_page

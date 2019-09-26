@@ -38,8 +38,7 @@ const config = (env, argv) => {
             hash: true,
             cache: false,
             title: 'react-infinite-scroll',
-        }),
-        new OfflinePlugin()
+        })
     ]
 
     const alias = {
@@ -65,9 +64,14 @@ const config = (env, argv) => {
     if (isDev) {
         plugins.push(
             /** 開啟HMR模式 */
-            new webpack.HotModuleReplacementPlugin()
+            new webpack.HotModuleReplacementPlugin(),
         )
     } else {
+        plugins.push(
+            /** service worker */
+            new OfflinePlugin()
+        )
+        
         alias['react'] = "preact/compat";
         alias['react-dom'] = "preact/compat";
         /** 等 nginx 有支援 static gzip 時再解開, 做gzip壓縮 */
