@@ -6,6 +6,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const OfflinePlugin = require('offline-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const config = (env, argv) => {
     /** 用來判斷環境是本機開發或production */
@@ -38,7 +39,11 @@ const config = (env, argv) => {
             hash: true,
             cache: false,
             title: 'react-infinite-scroll',
-        })
+        }),
+        /** 使用複製資料 plugin */
+        new CopyWebpackPlugin([
+            { from: './public/favicons/', to: './favicons/', ignore: ['.*'] },
+        ]),
     ]
 
     const alias = {
