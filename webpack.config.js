@@ -121,6 +121,7 @@ const config = (env, argv) => {
         /** 設定打包出來後的目錄 */
         output: {
             path: path.resolve(__dirname, './dist/'),
+            publicPath: "/",
             filename: '[name].[hash:4].js',
         },
         /** source map 映射方式 */
