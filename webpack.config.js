@@ -73,8 +73,8 @@ const config = (env, argv) => {
             new webpack.HotModuleReplacementPlugin(),
         )
     } else {
-        // alias['react'] = "preact/compat";
-        // alias['react-dom'] = "preact/compat";
+        alias['react'] = "preact/compat";
+        alias['react-dom'] = "preact/compat";
         /** 等 nginx 有支援 static gzip 時再解開, 做gzip壓縮 */
         plugins.push(
             new CompressionPlugin({
