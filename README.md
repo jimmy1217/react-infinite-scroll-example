@@ -12,7 +12,7 @@ open http://localhost:3000
 
 ## http-server 部署
 >**```yarn start```**<br/>
-open http://localhost:3000
+open http://localhost:3001
 
 ## Docker nginx 部署
 >**```docker-compose up -d```**<br/>

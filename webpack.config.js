@@ -6,6 +6,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const OfflinePlugin = require('offline-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const config = (env, argv) => {
     /** 用來判斷環境是本機開發或production */
@@ -39,7 +40,10 @@ const config = (env, argv) => {
             cache: false,
             title: 'react-infinite-scroll',
         }),
-        new OfflinePlugin()
+        /** 使用複製資料 plugin */
+        // new CopyWebpackPlugin([
+        //     { from: './public/favicons/', to: './favicons/', ignore: ['.*'] },
+        // ]),
     ]
 
     const alias = {
@@ -50,6 +54,7 @@ const config = (env, argv) => {
         'store': path.resolve(__dirname, './src/store/'),
         'storeAction': path.resolve(__dirname, './src/store/storeAction'),
         'public': path.resolve(__dirname, './public'),
+        'helpers': path.resolve(__dirname, './src/helpers/'),
     };
 
     const devServer = isDev
@@ -65,7 +70,7 @@ const config = (env, argv) => {
     if (isDev) {
         plugins.push(
             /** 開啟HMR模式 */
-            new webpack.HotModuleReplacementPlugin()
+            new webpack.HotModuleReplacementPlugin(),
         )
     } else {
         alias['react'] = "preact/compat";
@@ -79,6 +84,35 @@ const config = (env, argv) => {
                 threshold: 10240,
                 minRatio: 0.8,
             })
+        )
+        plugins.push(
+            /** service worker */
+            // new OfflinePlugin({
+            //     responseStrategy: 'cache-first', // 缓存优先
+            //     AppCache: false,                 // 不启用appCache
+            //     safeToUseOptionalCaches: true,   // Removes warning for about `additional` section usage
+            //     autoUpdate: true,                // 自动更新
+            //     caches: {                        // webpack打包后需要换的文件正则匹配
+            //         main: [
+            //             '**/*.js',
+            //             '**/*.css',
+            //             /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+            //             /\.(woff2?|eot|ttf|otf)(\?.*)?$/
+            //         ],
+            //         additional: [
+            //             ':externals:'
+            //         ]
+            //     },
+            //     externals: [],        // 设置外部链接，例如配置http://hello.com/getuser，那么在请求这个接口的时候就会进行接口缓存
+            //     excludes: ['**/.*', '**/*.map', '**/manifest-last.json'], // 需要过滤的文件
+            //     ServiceWorker: {
+            //         output: './../sw.js',       // 输出目录
+            //         publicPath: '/sw.js',    // sw.js 加载路径
+            //         scope: '/',                     // 作用域（此处有坑）
+            //         minify: true,                   // 开启压缩
+            //         events: true                    // 当sw状态改变时候发射对应事件
+            //     }
+            // })
         )
     }
 
@@ -96,7 +130,7 @@ const config = (env, argv) => {
                     sourceMap: true,
                     uglifyOptions: {
                         compress: {
-                            drop_console: true,
+                            drop_console: false,
                         },
                         output: {
                             comments: false,
@@ -112,6 +146,7 @@ const config = (env, argv) => {
         /** 設定打包出來後的目錄 */
         output: {
             path: path.resolve(__dirname, './dist/'),
+            // publicPath: '/static/',
             filename: '[name].[hash:4].js',
         },
         /** source map 映射方式 */
