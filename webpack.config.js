@@ -28,7 +28,7 @@ const config = (env, argv) => {
         /** webpack 打包時使用html 模板生成 */
         new HtmlWebPackPlugin({
             template: './src/index.ejs',
-            filename: './../index.html',
+            filename: './index.html',
             minify: {
                 collapseWhitespace: true,
                 removeComments: true,
@@ -87,32 +87,32 @@ const config = (env, argv) => {
         )
         plugins.push(
             /** service worker */
-            new OfflinePlugin({
-                responseStrategy: 'cache-first', // 缓存优先
-                AppCache: false,                 // 不启用appCache
-                safeToUseOptionalCaches: true,   // Removes warning for about `additional` section usage
-                autoUpdate: true,                // 自动更新
-                caches: {                        // webpack打包后需要换的文件正则匹配
-                    main: [
-                        '**/*.js',
-                        '**/*.css',
-                        /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-                        /\.(woff2?|eot|ttf|otf)(\?.*)?$/
-                    ],
-                    additional: [
-                        ':externals:'
-                    ]
-                },
-                externals: [],        // 设置外部链接，例如配置http://hello.com/getuser，那么在请求这个接口的时候就会进行接口缓存
-                excludes: ['**/.*', '**/*.map', '**/manifest-last.json'], // 需要过滤的文件
-                ServiceWorker: {
-                    output: './../sw.js',       // 输出目录
-                    publicPath: '/sw.js',    // sw.js 加载路径
-                    scope: '/',                     // 作用域（此处有坑）
-                    minify: true,                   // 开启压缩
-                    events: true                    // 当sw状态改变时候发射对应事件
-                }
-            })
+            // new OfflinePlugin({
+            //     responseStrategy: 'cache-first', // 缓存优先
+            //     AppCache: false,                 // 不启用appCache
+            //     safeToUseOptionalCaches: true,   // Removes warning for about `additional` section usage
+            //     autoUpdate: true,                // 自动更新
+            //     caches: {                        // webpack打包后需要换的文件正则匹配
+            //         main: [
+            //             '**/*.js',
+            //             '**/*.css',
+            //             /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+            //             /\.(woff2?|eot|ttf|otf)(\?.*)?$/
+            //         ],
+            //         additional: [
+            //             ':externals:'
+            //         ]
+            //     },
+            //     externals: [],        // 设置外部链接，例如配置http://hello.com/getuser，那么在请求这个接口的时候就会进行接口缓存
+            //     excludes: ['**/.*', '**/*.map', '**/manifest-last.json'], // 需要过滤的文件
+            //     ServiceWorker: {
+            //         output: './../sw.js',       // 输出目录
+            //         publicPath: '/sw.js',    // sw.js 加载路径
+            //         scope: '/',                     // 作用域（此处有坑）
+            //         minify: true,                   // 开启压缩
+            //         events: true                    // 当sw状态改变时候发射对应事件
+            //     }
+            // })
         )
     }
 
@@ -145,8 +145,8 @@ const config = (env, argv) => {
         },
         /** 設定打包出來後的目錄 */
         output: {
-            path: path.resolve(__dirname, './dist/static/'),
-            publicPath: '/static/',
+            path: path.resolve(__dirname, './dist/'),
+            // publicPath: '/static/',
             filename: '[name].[hash:4].js',
         },
         /** source map 映射方式 */
