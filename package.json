@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/jimmy1217/react-infinite-scroll-example#readme",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "babel-polyfill": "^6.26.0",
     "mobx": "4.4.2",
     "mobx-react": "5.2.8",
